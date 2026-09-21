@@ -10,8 +10,14 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByText('Products')).toBeVisible();
 });
 
-test('add item to cart', async ({ page }) => {
+test('adds Sauce Labs Backpack to the cart', async ({ page }) => {
   // Add item to cart
-  await page.getByRole('button', { name: 'Add to cart' }).first().click();
-    await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
+
+    const backpack = page
+     .getByTestId('inventory-item')
+     .filter({ hasText: 'Sauce Labs Backpack' });
+
+    await backpack.getByRole('button', { name: 'Add to cart' }).click();
+    await expect(page.getByTestId('shopping-cart-badge')).toHaveText('1');
+    await expect(backpack.getByRole('button', { name: 'Remove' })).toBeVisible();
 });
