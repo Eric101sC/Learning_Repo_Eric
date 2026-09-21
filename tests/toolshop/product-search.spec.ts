@@ -1,15 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-test('search returns Thor Hammer', async ({ page }) => {
-  await page.goto('https://practicesoftwaretesting.com/');
-  await page.getByTestId('search-query').fill('hammer');
-  await page.getByTestId('search-query').press('Enter');
+test('search for hammer', async ({ page }) => {
+  await page.goto('/');
+  const searchBox = page.getByTestId('search-query');
+  await searchBox.fill('hammer');
+  await searchBox.press('Enter');
 
-  const thorHammer = page
-    .getByTestId('product-name')
-    .filter({ hasText: 'Thor Hammer' })
-    .first();
-
-  await expect(thorHammer).toBeVisible();
-  await expect(thorHammer).toHaveText('Thor Hammer');
+  await expect(page.getByTestId('search-term')).toHaveText('hammer');
+ await expect(page.getByTestId('product-name').filter({ hasText: 'Claw Hammer with Shock Reduction Grip' })).toBeVisible();
+  await expect(page.getByTestId('product-name').filter({ hasText: 'Thor Hammer' })).toBeVisible();
 });

@@ -21,3 +21,17 @@ test('adds Sauce Labs Backpack to the cart', async ({ page }) => {
     await expect(page.getByTestId('shopping-cart-badge')).toHaveText('1');
     await expect(backpack.getByRole('button', { name: 'Remove' })).toBeVisible();
 });
+
+test('removes Sauce Labs Backpack from the cart', async ({ page }) => {
+  const backpack = page
+    .getByTestId('inventory-item')
+    .filter({ hasText: 'Sauce Labs Backpack' });
+
+  await backpack.getByRole('button', { name: 'Add to cart' }).click();
+  await expect(page.getByTestId('shopping-cart-badge')).toHaveText('1');
+  await expect(backpack.getByRole('button', { name: 'Remove' })).toBeVisible();
+
+  await backpack.getByRole('button', { name: 'Remove' }).click();
+  await expect(page.getByTestId('shopping-cart-badge')).not.toBeVisible();
+  await expect(backpack.getByRole('button', { name: 'Add to cart' })).toBeVisible();
+});
