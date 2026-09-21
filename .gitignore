@@ -6,3 +6,10 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# SSH keys - never commit
+y
+y.pub
+*.pem
+id_rsa*
+id_ed25519*
